@@ -15,34 +15,36 @@ func main() {
 
 	for _, line := range lines {
 		split := strings.Split(line, " ")
-		fmt.Println(split)
 		left = append(left, mustInt(split[0]))
 		right = append(right, mustInt(split[3]))
-	}
-
-	fmt.Println(left)
-	fmt.Println(right)
-
-	if len(left) != len(right) {
-		panic("lens not equal")
 	}
 
 	// sort left & right by descending values
 	sort.Slice(left, func(i, j int) bool { return left[i] > left[j] })
 	sort.Slice(right, func(i, j int) bool { return right[i] > right[j] })
 
-	fmt.Println(left)
-	fmt.Println(right)
+	fmt.Println(similarityScore(left, right))
+}
 
-	distanceSum := 0
-
-	for ii := 0; ii < len(left); ii++ {
-		// get the absolute value of the difference
-		fmt.Printf("left[%d]: %d\nright[%d]: %d\n", ii, left[ii], ii, right[ii])
-		distanceSum += absInt(left[ii] - right[ii])
+func similarityScore(left []int, right []int) int {
+	ret := 0
+	for _, v := range left {
+		ret += count(v, right) * v
 	}
 
-	fmt.Println(distanceSum)
+	return ret
+}
+
+// given a list of numbers, count the number of times a number is in the given list
+func count(q int, right []int) int {
+	count := 0
+	for _, v := range right {
+		if v == q {
+			count++
+		}
+	}
+
+	return count
 }
 
 func absInt(i int) int {
