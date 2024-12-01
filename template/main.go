@@ -11,7 +11,7 @@ func main() {
 }
 
 func getLines(filename string) string {
-	bytes, err := os.ReadFile("input.txt")
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println("error", err)
 	}
